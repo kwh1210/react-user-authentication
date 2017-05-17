@@ -45,11 +45,11 @@ router.post('/',(req,res)=>{
   validateInput(req.body,commonValidations).then(({errors,isValid})=>{
 
     if(isValid){
-      const { username,password,timezone,email} = req.body;
+      const { username,password,email} = req.body;
       const password_digest = bcrypt.hashSync(password,10);
 
       User.forge({
-        username,timezone,email,password_digest
+        username,email,password_digest
       },{hasTimestamps:true}).save()
       .then(user=>res.json({success :true}))
       .catch(err=>res.status(500).json({error:err}));
